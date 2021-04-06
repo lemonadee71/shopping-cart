@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "title": "Sample product 1",
+      "details": "Lorem ipsum dolor",
+      "url": "./assets/items/sample.png"
+    },
+    {
+      "title": "Sample product 2",
+      "details": "Lorem ipsum dolor",
+      "url": "./assets/items/sample.png"
+    },
+    {
+      "title": "Sample product 3",
+      "details": "Lorem ipsum dolor",
+      "url": "./assets/items/sample.png"
+    }
+  ]
+}
