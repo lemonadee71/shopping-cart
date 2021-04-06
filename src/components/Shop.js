@@ -1,21 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import ProductCard from './ProductCard';
-
-const style = {
-  display: 'flex',
-  flexWrap: 'wrap',
-};
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import Catalog from './Catalog';
 
 const Shop = ({ data }) => {
+  let match = useRouteMatch();
+
   return (
-    <div style={style}>
-      {data.map((item) => (
-        <Link to={`/products/${item.id}`} key={item.id}>
-          <ProductCard info={item} />
-        </Link>
-      ))}
-    </div>
+    <Switch>
+      <Route exact path={match.path}>
+        <Catalog data={data} />
+      </Route>
+      <Route exact path={`${match.path}/:id`}>
+        <Catalog data={data} />
+      </Route>
+    </Switch>
   );
 };
 
