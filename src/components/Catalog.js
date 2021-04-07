@@ -15,7 +15,7 @@ const Catalog = ({ data }) => {
     if (!id) {
       setDataset(data);
     } else {
-      setDataset(data.filter((item) => item.albumId === id));
+      setDataset(data.filter((item) => item.albumId.toString() === id));
     }
   }, [id, data]);
 

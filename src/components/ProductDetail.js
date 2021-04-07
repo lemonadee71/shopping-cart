@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-const ProductDetail = ({ data }) => {
+const ProductDetail = ({ data, add, remove }) => {
   const [currentItem, setCurrentItem] = useState();
+  // const [itemCount, setItemCount] = useState(0)
   let { id } = useParams();
 
   useEffect(() => {
-    console.log(id);
+    // setItemCount(0)
+
     const item = data[+id - 1];
     setCurrentItem(item || null);
   }, [id, data]);
@@ -19,6 +21,8 @@ const ProductDetail = ({ data }) => {
           <div>
             <img src={currentItem.url} alt="product" />
           </div>
+          <button onClick={() => add(1)}>+</button>
+          <button onClick={() => remove(1)}>-</button>
         </>
       ) : (
         <>
