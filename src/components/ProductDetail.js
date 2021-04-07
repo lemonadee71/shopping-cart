@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-const ProductDetail = ({ data, add, remove }) => {
+const ProductDetail = ({ data, addToCart }) => {
   const [currentItem, setCurrentItem] = useState();
-  // const [itemCount, setItemCount] = useState(0)
+  const [quantity, setQuantity] = useState(0);
   let { id } = useParams();
 
-  useEffect(() => {
-    // setItemCount(0)
+  const increment = () => {
+    setQuantity(quantity + 1);
+  };
 
+  const decrement = () => {
+    setQuantity(Math.max(0, quantity - 1));
+  };
+
+  const checkout = () => {
+    alert('Item added to cart');
+    addToCart({ id, quantity });
+    setQuantity(0);
+  };
+
+  useEffect(() => {
     const item = data[+id - 1];
     setCurrentItem(item || null);
   }, [id, data]);
@@ -17,12 +29,15 @@ const ProductDetail = ({ data, add, remove }) => {
     <div>
       {currentItem ? (
         <>
+          {/* Repetitive. This component is the same as in CartItem */}
           <h1>{currentItem.title}</h1>
           <div>
             <img src={currentItem.url} alt="product" />
           </div>
-          <button onClick={() => add(1)}>+</button>
-          <button onClick={() => remove(1)}>-</button>
+          <button onClick={increment}>+</button>
+          <span>{quantity}</span>
+          <button onClick={decrement}>-</button>
+          <button onClick={checkout}>Checkout</button>
         </>
       ) : (
         <>

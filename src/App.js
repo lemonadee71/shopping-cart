@@ -10,7 +10,7 @@ import Cart from './components/Cart';
 
 function App() {
   const [data, setData] = useState([]);
-  const [itemsInCart, setItemsInCart] = useState(0);
+  const [itemsInCart, setItemsInCart] = useState({});
 
   const fetchData = async () => {
     const response = await fetch('https://jsonplaceholder.typicode.com/photos');
@@ -19,12 +19,18 @@ function App() {
     setData(photos.slice(0, 100));
   };
 
-  const addItemsToCart = (amount) => {
-    setItemsInCart(itemsInCart + amount);
+  const addItemsToCart = ({ id, quantity }) => {
+    console.log(`ID: ${id}, QUANTITY: ${quantity}`);
+    setItemsInCart({ ...itemsInCart, [id]: (itemsInCart[id] || 0) + quantity });
+    console.log(itemsInCart);
   };
 
-  const removeItemsFromCart = (amount) => {
-    setItemsInCart(itemsInCart - amount);
+  const removeItemsFromCart = ({ id, quantity }) => {
+    setItemsInCart({
+      ...itemsInCart,
+      [id]: Math.max(0, itemsInCart[id] - quantity),
+    });
+    console.log(itemsInCart);
   };
 
   useEffect(() => {
@@ -44,14 +50,15 @@ function App() {
             <Shop data={data} />
           </Route>
           <Route exact path="/cart">
-            <Cart numberOfItems={itemsInCart} />
+            <Cart
+              items={itemsInCart}
+              data={data}
+              removeFromCart={removeItemsFromCart}
+              addToCart={addItemsToCart}
+            />
           </Route>
           <Route exact path="/products/:id">
-            <ProductDetail
-              data={data}
-              add={addItemsToCart}
-              remove={removeItemsFromCart}
-            />
+            <ProductDetail data={data} addToCart={addItemsToCart} />
           </Route>
           <Route exact path="/about" component={About} />
         </Switch>
