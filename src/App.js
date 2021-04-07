@@ -20,7 +20,6 @@ function App() {
   };
 
   const addItemsToCart = ({ id, quantity }) => {
-    console.log(`ID: ${id}, QUANTITY: ${quantity}`);
     setItemsInCart({ ...itemsInCart, [id]: (itemsInCart[id] || 0) + quantity });
     console.log(itemsInCart);
   };

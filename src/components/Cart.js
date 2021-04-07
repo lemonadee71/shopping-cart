@@ -2,10 +2,21 @@ import React, { useState, useEffect } from 'react';
 import CartItem from './CartItem';
 
 const Cart = ({ items, data, addToCart, removeFromCart }) => {
-  const [numberOfItems, setNumberOfItems] = useState(Object.keys(items).length);
+  const [numberOfItems, setNumberOfItems] = useState(0);
 
   useEffect(() => {
-    setNumberOfItems(Object.keys(items).length);
+    const countValidItems = () => {
+      let validItems = 0;
+      Object.values(items).forEach((quantity) => {
+        if (quantity) {
+          validItems++;
+        }
+      });
+
+      return validItems;
+    };
+
+    setNumberOfItems(countValidItems);
   }, [items]);
 
   return (
