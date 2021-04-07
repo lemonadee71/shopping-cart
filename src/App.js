@@ -26,10 +26,13 @@ function App() {
   };
 
   const removeItemsFromCart = ({ id, quantity }) => {
+    const newQuantity = Math.max(0, itemsInCart[id] - quantity);
+
     setItemsInCart({
       ...itemsInCart,
-      [id]: Math.max(0, itemsInCart[id] - quantity),
+      [id]: newQuantity,
     });
+
     console.log(itemsInCart);
   };
 

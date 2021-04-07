@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CartItem from './CartItem';
 
 const Cart = ({ items, data, addToCart, removeFromCart }) => {
-  const numberOfItems = Object.keys(items).length;
+  const [numberOfItems, setNumberOfItems] = useState(Object.keys(items).length);
+
+  useEffect(() => {
+    setNumberOfItems(Object.keys(items).length);
+  }, [items]);
 
   return (
     <div>
@@ -13,15 +17,19 @@ const Cart = ({ items, data, addToCart, removeFromCart }) => {
       )}
       <div>
         {items &&
-          Object.keys(items).map((id) => (
-            <CartItem
-              key={id}
-              item={data[+id - 1]}
-              count={items[id]}
-              increment={addToCart}
-              decrement={removeFromCart}
-            />
-          ))}
+          Object.keys(items).map((id) => {
+            const itemCount = items[id];
+
+            return itemCount ? (
+              <CartItem
+                key={id}
+                item={data[+id - 1]}
+                count={itemCount}
+                increment={addToCart}
+                decrement={removeFromCart}
+              />
+            ) : null;
+          })}
       </div>
 
       <button

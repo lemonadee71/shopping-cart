@@ -37,7 +37,9 @@ const ProductDetail = ({ data, addToCart }) => {
           <button onClick={increment}>+</button>
           <span>{quantity}</span>
           <button onClick={decrement}>-</button>
-          <button onClick={checkout}>Checkout</button>
+          <button disabled={!quantity} onClick={checkout}>
+            Checkout
+          </button>
         </>
       ) : (
         <>
