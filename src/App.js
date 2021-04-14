@@ -56,9 +56,9 @@ function App() {
           <Route path="/shop">
             <Shop data={data} />
           </Route>
-          <Route path="/shop/:id">
+          {/* <Route path="/shop/:id">
             <Shop data={data} />
-          </Route>
+          </Route> */}
           <Route exact path="/cart">
             <Cart
               items={itemsInCart}
