@@ -19,17 +19,25 @@ function App() {
     setData(photos.slice(0, 100));
   };
 
-  const addItemsToCart = ({ id, quantity }) => {
-    setItemsInCart({ ...itemsInCart, [id]: (itemsInCart[id] || 0) + quantity });
+  const addItemsToCart = ({ id, quantity, price }) => {
+    const item = {
+      price,
+      quantity: (itemsInCart[id] ? itemsInCart[id].quantity : 0) + quantity,
+    };
+
+    setItemsInCart({ ...itemsInCart, [id]: item });
     console.log(itemsInCart);
   };
 
   const removeItemsFromCart = ({ id, quantity }) => {
-    const newQuantity = Math.max(0, itemsInCart[id] - quantity);
+    const newQuantity = Math.max(
+      0,
+      (itemsInCart[id] ? itemsInCart[id].quantity : 0) - quantity
+    );
 
     setItemsInCart({
       ...itemsInCart,
-      [id]: newQuantity,
+      [id]: { quantity: newQuantity, price: itemsInCart[id].price },
     });
 
     console.log(itemsInCart);

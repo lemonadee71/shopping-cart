@@ -3,39 +3,50 @@ import CartItem from './CartItem';
 
 const Cart = ({ items, data, addToCart, removeFromCart }) => {
   const [numberOfItems, setNumberOfItems] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const countValidItems = () => {
+    const tallyItems = () => {
       let validItems = 0;
-      Object.values(items).forEach((quantity) => {
+      let totalPrice = 0;
+
+      Object.values(items).forEach(({ quantity, price }) => {
         if (quantity) {
           validItems++;
+          totalPrice += quantity * price;
         }
       });
 
-      return validItems;
+      return [validItems, totalPrice];
     };
 
-    setNumberOfItems(countValidItems);
+    const [validItems, totalPrice] = tallyItems();
+
+    setNumberOfItems(validItems);
+    setTotal(totalPrice);
   }, [items]);
 
   return (
     <div>
       {numberOfItems ? (
-        <p>You have {numberOfItems} in your cart</p>
+        <>
+          <p>You have {numberOfItems} in your cart</p>
+          <p>Your total is ${total}</p>
+        </>
       ) : (
         <p>You don't have any items in your cart</p>
       )}
       <div>
         {items &&
           Object.keys(items).map((id) => {
-            const itemCount = items[id];
+            const cartItem = items[id];
 
-            return itemCount ? (
+            return cartItem.quantity ? (
               <CartItem
                 key={id}
+                info={cartItem}
                 item={data[+id - 1]}
-                count={itemCount}
+                count={cartItem.quantity}
                 increment={addToCart}
                 decrement={removeFromCart}
               />

@@ -16,7 +16,8 @@ const ProductDetail = ({ data, addToCart }) => {
 
   const checkout = () => {
     alert('Item added to cart');
-    addToCart({ id, quantity });
+    // Price is 10 for now
+    addToCart({ id, quantity, price: 10 });
     setQuantity(0);
   };
 

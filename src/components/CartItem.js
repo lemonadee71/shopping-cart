@@ -1,12 +1,12 @@
 import React from 'react';
 
-const CartItem = ({ item, count, increment, decrement }) => {
+const CartItem = ({ item, info, count, increment, decrement }) => {
   const onIncrement = () => {
-    increment({ id: item.id, quantity: 1 });
+    increment({ id: item.id, quantity: 1, price: info.price });
   };
 
   const onDecrement = () => {
-    decrement({ id: item.id, quantity: 1 });
+    decrement({ id: item.id, quantity: 1, price: info.price });
   };
 
   return (
